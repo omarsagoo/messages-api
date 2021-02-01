@@ -5,12 +5,20 @@ const User = require('../models/user')
 
 /** Route to get all users. */
 router.get('/', (req, res) => {
-    return res.send(`All Users route`)
+    User.find().then(users => {
+        return res.json({users})
+    }).catch(err => {
+        throw err.message
+    })
 })
 
 /** Route to get one user by id. */
 router.get('/:userId', (req, res) => {
-    return res.send(`User with id ${req.params.userId}`)
+    User.findById(req.params.userId).then(user => {
+        return res.json({user})
+    }).catch(err => {
+        throw err.message
+    })
 })
 
 /** Route to add a new user to the database. */
